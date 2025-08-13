@@ -107,7 +107,18 @@
 
     POST /api/auth/login Body: { "username": "admin", "password": "senha123" }
 
-    Resposta: json Copiar Editar { "success": true, "message": "Login realizado com sucesso", "data": { "user": { "id": 1, "username": "admin", "email": "admin@example.com", "full_name": "Administrador", "role": "admin", "is_active": true }, "token": "token_jwt_gerado" } }
+    Resposta: 
+    json { 
+    "success": true, 
+    "message": "Login realizado com sucesso", 
+    "data": { 
+    "user": { "id": 1, "username": "admin", 
+              "email": "admin@example.com", 
+              "full_name": "Administrador", 
+              "role": "admin", 
+              "is_active": true }, 
+    "token": "token_jwt_gerado" } 
+    }
 ## Funcionalidades
 
     Cadastro e login seguro com JWT
