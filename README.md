@@ -124,7 +124,9 @@
     Dashboard para visualização e gerenciamento
 ## Contrinuições
 
-    Contribuição Contribuições são bem-vindas! Para contribuir:
+    Contribuição Contribuições são bem-vindas! 
+    
+    Para contribuir:
 
     Fork este repositório
 
