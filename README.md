@@ -140,4 +140,5 @@
     Abra um Pull Request neste repositório
 ## Licença
 
-    Projeto open-source desenvolvido por Francisco Dias sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
+    Projeto open-source desenvolvido por #Francisco Dias# sob a licença MIT. 
+    Veja o arquivo LICENSE para mais detalhes.
