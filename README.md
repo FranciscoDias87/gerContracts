@@ -1,7 +1,8 @@
 
 # gerContracts
 
-    Sistema para gerenciamento de contratos de publicidade em emissoras de rádio, com backend em Node.js/Express e frontend em React.
+    Sistema para gerenciamento de contratos de publicidade em emissoras de rádio, 
+    com backend em Node.js/Express e frontend em React.
 
 ## Sumario
     1. Sobre
