@@ -25,7 +25,8 @@
 
     10. Licença
 ## Sobre
-    Sobre Sistema para facilitar o cadastro, gerenciamento e controle de contratos de anunciantes em rádios. Permite controle de usuários, clientes, contratos, autenticação segura com JWT e interface moderna em React.
+    Sobre Sistema para facilitar o cadastro, gerenciamento e controle de contratos de anunciantes em rádios. 
+    Permite controle de usuários, clientes, contratos, autenticação segura com JWT e interface moderna em React.
 ## Tecnologias
 
     Backend: Node.js, Express, MySQL, JWT, bcrypt, express-validator
@@ -107,7 +108,18 @@
 
     POST /api/auth/login Body: { "username": "admin", "password": "senha123" }
 
-    Resposta: json Copiar Editar { "success": true, "message": "Login realizado com sucesso", "data": { "user": { "id": 1, "username": "admin", "email": "admin@example.com", "full_name": "Administrador", "role": "admin", "is_active": true }, "token": "token_jwt_gerado" } }
+    Resposta: 
+    json { 
+    "success": true, 
+    "message": "Login realizado com sucesso", 
+    "data": { 
+    "user": { "id": 1, "username": "admin", 
+              "email": "admin@example.com", 
+              "full_name": "Administrador", 
+              "role": "admin", 
+              "is_active": true }, 
+    "token": "token_jwt_gerado" } 
+    }
 ## Funcionalidades
 
     Cadastro e login seguro com JWT
