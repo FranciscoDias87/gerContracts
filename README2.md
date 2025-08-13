@@ -124,4 +124,4 @@ Este projeto está licenciado sob a licença **MIT** - veja o arquivo [LICENSE](
 
 ---
 
-✍️ **Autor:** Francisco Dias
+✍️ **Autor:** Francisco das Chagas Pereira Dias
