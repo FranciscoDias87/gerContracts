@@ -24,9 +24,14 @@
     9. Contribuição
 
     10. Licença
+   
 ## Sobre
-    Sobre Sistema para facilitar o cadastro, gerenciamento e controle de contratos de anunciantes em rádios. 
-    Permite controle de usuários, clientes, contratos, autenticação segura com JWT e interface moderna em React.
+    Sobre Sistema para facilitar o cadastro, gerenciamento e 
+    controle de contratos de anunciantes em rádios. 
+    
+    Permite controle de usuários, clientes, contratos, autenticação segura com JWT     
+    e interface moderna em React.
+
 ## Tecnologias
 
     Backend: Node.js, Express, MySQL, JWT, bcrypt, express-validator
@@ -36,6 +41,7 @@
     Banco de dados: MySQL
 
     Outros: dotenv para variáveis de ambiente, cors para políticas de acesso
+
 ## Pré-Requisitos
     React
 
@@ -48,15 +54,26 @@
     MySQL (ou MariaDB) instalado e configurado
 
     Yarn ou npm
+
 ## Variáveis de Ambiente
 
     Clone o repositório:
 
-    git clone https://github.com/FranciscoDias87/gerContracts.git cd gerContracts Backend:
+    git clone https://github.com/FranciscoDias87/gerContracts.git 
+    
+    cd gerContracts 
+    
+    Backend:
 
-    cd backend npm install Frontend:
+    cd backend 
+    
+    npm install 
+    
+    Frontend:
 
-    cd ../frontend npm install 
+    cd frontend 
+    
+    npm install 
     
     Variáveis de ambiente 
     No diretório backend, crie um arquivo .env com as seguintes variáveis (exemplo):
@@ -93,6 +110,7 @@
     npm run dev 
     
     O frontend será servido no http://localhost:5173 (padrão do Vite).
+
 ## API
 
     A API está organizada em rotas como:
@@ -104,6 +122,7 @@
     /api/clients - gerenciamento de clientes/anunciantes
 
     /api/contracts - gerenciamento de contratos de anúncios
+
 ## Exemplos de Login
 
     POST /api/auth/login Body: { "username": "admin", "password": "senha123" }
@@ -120,6 +139,7 @@
               "is_active": true }, 
     "token": "token_jwt_gerado" } 
     }
+
 ## Funcionalidades
 
     Cadastro e login seguro com JWT
@@ -135,6 +155,7 @@
     Middleware para autenticação e autorização nas rotas protegidas
 
     Dashboard para visualização e gerenciamento
+
 ## Contrinuições
 
     Contribuição Contribuições são bem-vindas! 
@@ -150,6 +171,7 @@
     Faça push para a branch (git push origin feature/nome-da-feature)
 
     Abra um Pull Request neste repositório
+    
 ## Licença
 
     Projeto open-source desenvolvido por #Francisco Dias# sob a licença MIT. 
