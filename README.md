@@ -25,7 +25,8 @@
 
     10. Licença
 ## Sobre
-    Sobre Sistema para facilitar o cadastro, gerenciamento e controle de contratos de anunciantes em rádios. Permite controle de usuários, clientes, contratos, autenticação segura com JWT e interface moderna em React.
+    Sobre Sistema para facilitar o cadastro, gerenciamento e controle de contratos de anunciantes em rádios. 
+    Permite controle de usuários, clientes, contratos, autenticação segura com JWT e interface moderna em React.
 ## Tecnologias
 
     Backend: Node.js, Express, MySQL, JWT, bcrypt, express-validator
