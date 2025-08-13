@@ -1,187 +1,140 @@
-gerContracts
-Sistema para gerenciamento de contratos de publicidade em emissoras de rádio, com backend em Node.js/Express e frontend em React.
 
-📋 Sumário
-Sobre
+# gerContracts
 
-Tecnologias
+    Sistema para gerenciamento de contratos de publicidade em emissoras de rádio, com backend em Node.js/Express e frontend em React.
 
-Pré-requisitos
+## Sumario
+    1. Sobre
 
-Configuração e instalação
+    2. Tecnologias
 
-Variáveis de ambiente
+    3. Pré-requisitos
 
-Como rodar o projeto
+    4. Configuração e instalação
 
-API
+    5. Variáveis de ambiente
 
-Funcionalidades
+    6. Como rodar o projeto
 
-Contribuição
+    7. API
 
-Licença
+    8. Funcionalidades
 
-Sobre
-Sistema para facilitar o cadastro, gerenciamento e controle de contratos de anunciantes em rádios. Permite controle de usuários, clientes, contratos, autenticação segura com JWT e interface moderna em React.
+    9. Contribuição
 
-Tecnologias
-Backend: Node.js, Express, MySQL, JWT, bcrypt, express-validator
+    10. Licença
+## Sobre
+    Sobre Sistema para facilitar o cadastro, gerenciamento e controle de contratos de anunciantes em rádios. Permite controle de usuários, clientes, contratos, autenticação segura com JWT e interface moderna em React.
+## Tecnologias
 
-Frontend: React, React Router, Axios
+    Backend: Node.js, Express, MySQL, JWT, bcrypt, express-validator
 
-Banco de dados: MySQL
+    Frontend: React, React Router, Axios
 
-Outros: dotenv para variáveis de ambiente, cors para políticas de acesso
+    Banco de dados: MySQL
 
-Pré-requisitos
-Node.js (versão >= 18)
+    Outros: dotenv para variáveis de ambiente, cors para políticas de acesso
+## Pré-Requisitos
+    React
 
-MySQL (ou MariaDB) instalado e configurado
+    Vite
 
-Yarn ou npm
+    Typescript
 
-Editor de código (VSCode recomendado)
+    Node.js (versão >= 18)
 
-Configuração e instalação
-Clone o repositório:
+    MySQL (ou MariaDB) instalado e configurado
 
-bash
-Copiar
-Editar
-git clone https://github.com/FranciscoDias87/gerContracts.git
-cd gerContracts
-Backend:
+    Yarn ou npm
+## Variáveis de Ambiente
 
-bash
-Copiar
-Editar
-cd backend
-npm install
-Frontend:
+    Clone o repositório:
 
-bash
-Copiar
-Editar
-cd ../frontend
-npm install
-Variáveis de ambiente
-No diretório backend, crie um arquivo .env com as seguintes variáveis (exemplo):
+    git clone https://github.com/FranciscoDias87/gerContracts.git cd gerContracts Backend:
 
-ini
-Copiar
-Editar
-PORT=3001
-NODE_ENV=development
+    cd backend npm install Frontend:
 
-DB_HOST=localhost
-DB_USER=root
-DB_PASSWORD=sua_senha
-DB_NAME=radio_contracts_db
-DB_PORT=3306
+    cd ../frontend npm install 
+    
+    Variáveis de ambiente 
+    No diretório backend, crie um arquivo .env com as seguintes variáveis (exemplo):
+     
+    PORT=3001 
+    
+    NODE_ENV=development
 
-JWT_SECRET=sua_chave_secreta
-JWT_EXPIRES_IN=24h
+    DB_HOST=localhost 
+    DB_USER=root 
+    DB_PASSWORD=sua_senha 
+    DB_NAME=radio_contracts_db 
+    DB_PORT=3306
 
-BCRYPT_ROUNDS=10
+    JWT_SECRET=sua_chave_secreta JWT_EXPIRES_IN=24h
 
-RATE_LIMIT_WINDOW_MS=900000
-RATE_LIMIT_MAX_REQUESTS=100
-No diretório frontend, configure também o .env para apontar para o backend:
+    BCRYPT_ROUNDS=10
 
-bash
-Copiar
-Editar
-VITE_API_URL=http://localhost:3001/api
-Como rodar o projeto
-Backend
-No terminal, dentro da pasta backend:
+    RATE_LIMIT_WINDOW_MS=900000                 
+    RATE_LIMIT_MAX_REQUESTS=100 
 
-bash
-Copiar
-Editar
-npm run dev
-O servidor vai rodar na porta 3001 (http://localhost:3001).
+    No diretório frontend, configure também o .env para apontar para o backend:
+    
+    VITE_API_URL=http://localhost:3001/api 
+    
+    Como rodar o projeto Backend No terminal, dentro da pasta backend:
+    
+    npm run dev 
+    
+    O servidor vai rodar na porta 3001 (http://localhost:3001).
 
-Frontend
-No terminal, dentro da pasta frontend:
+    Frontend No terminal, dentro da pasta frontend:
+        
+    npm run dev 
+    
+    O frontend será servido no http://localhost:5173 (padrão do Vite).
+## API
 
-bash
-Copiar
-Editar
-npm run dev
-O frontend será servido no http://localhost:5173 (padrão do Vite).
+    A API está organizada em rotas como:
 
-API
-A API está organizada em rotas como:
+    /api/auth - autenticação e registro
 
-/api/auth - autenticação e registro
+    /api/users - gerenciamento de usuários
 
-/api/users - gerenciamento de usuários
+    /api/clients - gerenciamento de clientes/anunciantes
 
-/api/clients - gerenciamento de clientes/anunciantes
+    /api/contracts - gerenciamento de contratos de anúncios
+## Exemplos de Login
 
-/api/contracts - gerenciamento de contratos de anúncios
+    POST /api/auth/login Body: { "username": "admin", "password": "senha123" }
 
-Exemplo de login:
+    Resposta: json Copiar Editar { "success": true, "message": "Login realizado com sucesso", "data": { "user": { "id": 1, "username": "admin", "email": "admin@example.com", "full_name": "Administrador", "role": "admin", "is_active": true }, "token": "token_jwt_gerado" } }
+## Funcionalidades
 
-css
-Copiar
-Editar
-POST /api/auth/login
-Body:
-{
-  "username": "admin",
-  "password": "senha123"
-}
-Resposta:
+    Cadastro e login seguro com JWT
 
-json
-Copiar
-Editar
-{
-  "success": true,
-  "message": "Login realizado com sucesso",
-  "data": {
-    "user": {
-      "id": 1,
-      "username": "admin",
-      "email": "admin@example.com",
-      "full_name": "Administrador",
-      "role": "admin",
-      "is_active": true
-    },
-    "token": "token_jwt_gerado"
-  }
-}
-Funcionalidades
-Cadastro e login seguro com JWT
+    Controle de usuários com permissões por função (admin, gerente, locutor)
 
-Controle de usuários com permissões por função (admin, gerente, locutor)
+    Cadastro e gerenciamento de clientes (anunciantes)
 
-Cadastro e gerenciamento de clientes (anunciantes)
+    Cadastro e gerenciamento de contratos de publicidade
 
-Cadastro e gerenciamento de contratos de publicidade
+    Validações robustas para dados enviados
 
-Validações robustas para dados enviados
+    Middleware para autenticação e autorização nas rotas protegidas
 
-Middleware para autenticação e autorização nas rotas protegidas
+    Dashboard para visualização e gerenciamento
+## Contrinuições
 
-Dashboard para visualização e gerenciamento
+    Contribuição Contribuições são bem-vindas! Para contribuir:
 
-Contribuição
-Contribuições são bem-vindas! Para contribuir:
+    Fork este repositório
 
-Fork este repositório
+    Crie uma branch com sua feature (git checkout -b feature/nome-da-feature)
 
-Crie uma branch com sua feature (git checkout -b feature/nome-da-feature)
+    Faça commit das suas mudanças (git commit -m 'feat: descrição da feature')
 
-Faça commit das suas mudanças (git commit -m 'feat: descrição da feature')
+    Faça push para a branch (git push origin feature/nome-da-feature)
 
-Faça push para a branch (git push origin feature/nome-da-feature)
+    Abra um Pull Request neste repositório
+## Licença
 
-Abra um Pull Request neste repositório
-
-Licença
-Projeto open-source desenvolvido por Francisco Dias sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
-
+    Projeto open-source desenvolvido por Francisco Dias sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
