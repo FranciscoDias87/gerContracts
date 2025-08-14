@@ -25,14 +25,12 @@ const login = async (req, res) => {
       )} WHERE username = ? AND is_active = TRUE`,
       [username]
     );
-    console.log("Usuários encontrados:", users);
 
     if (users.length === 0) {
       return res.status(401).json({
         success: false,
         message: "Credenciais inválidas",
       });
-      console.log("Usuário não encontrado ou inativo");
     }
 
     const user = users[0];
@@ -45,11 +43,9 @@ const login = async (req, res) => {
         message: "Credenciais inválidas",
       });
     }
-    console.log("Senha válida para usuário:", isPasswordValid);
 
     // Gerar token JWT
     const token = generateToken(user.id, user.role);
-    console.log("Token gerado:", token);
 
     // Remover senha do objeto de resposta
     const { password_hash, ...userWithoutPassword } = user;
