@@ -2,15 +2,14 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
-import './App.css';
-
 import Layout from './components/Layout';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
-import NotFoundPage from './pages/NotFoundPage';
 import ContractsPage from './pages/ContractsPage';
+import ClientsPage from './pages/ClientsPage';
 import UsersPage from './pages/UsersPage';
-import ClientsPage from './pages/ClientsPage';  
+import NotFoundPage from './pages/NotFoundPage';
+import './App.css';
 
 function App() {
   return (
@@ -18,7 +17,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
-          <Route path="/login" element={<LoginPage />} />          
+          <Route path="/login" element={<LoginPage />} />
           <Route
             path="/dashboard"
             element={
@@ -58,7 +57,7 @@ function App() {
                 </Layout>
               </ProtectedRoute>
             }
-          />          
+          />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Router>
@@ -67,4 +66,3 @@ function App() {
 }
 
 export default App;
-

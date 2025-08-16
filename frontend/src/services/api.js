@@ -55,7 +55,6 @@ class ApiService {
       method: "POST",
       body: JSON.stringify(credentials),
     });
-    console.log("Login response:", response);
 
     if (response.success && response.data.token) {
       this.setToken(response.data.token);
@@ -196,4 +195,7 @@ class ApiService {
   }
 }
 
-export default new ApiService();
+const apiService = new ApiService();
+
+export { apiService as api };
+export default apiService;
