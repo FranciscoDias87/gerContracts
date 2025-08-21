@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   AppBar,
   Toolbar,
@@ -14,7 +14,7 @@ import {
   Menu,
   MenuItem,
   Divider,
-} from "@mui/material";
+} from '@mui/material';
 import {
   Menu as MenuIcon,
   Dashboard,
@@ -23,9 +23,9 @@ import {
   Description,
   AccountCircle,
   ExitToApp,
-} from "@mui/icons-material";
-import { useNavigate, useLocation } from "react-router-dom";
-import { useAuth } from "../contexts/AuthContext";
+} from '@mui/icons-material';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
 const drawerWidth = 240;
 
@@ -50,38 +50,38 @@ const Layout = ({ children }) => {
 
   const handleLogout = () => {
     logout();
-    navigate("/login");
+    navigate('/login');
     handleProfileMenuClose();
   };
 
   const menuItems = [
     {
-      text: "Dashboard",
+      text: 'Dashboard',
       icon: <Dashboard />,
-      path: "/dashboard",
-      roles: ["admin", "gerente", "locutor"],
+      path: '/dashboard',
+      roles: ['admin', 'gerente', 'locutor'],
     },
     {
-      text: "Contratos",
+      text: 'Contratos',
       icon: <Description />,
-      path: "/contracts",
-      roles: ["admin", "gerente", "locutor"],
+      path: '/contracts',
+      roles: ['admin', 'gerente', 'locutor'],
     },
     {
-      text: "Clientes",
+      text: 'Clientes',
       icon: <Business />,
-      path: "/clients",
-      roles: ["admin", "gerente"],
+      path: '/clients',
+      roles: ['admin', 'gerente'],
     },
     {
-      text: "Usuários",
+      text: 'Usuários',
       icon: <People />,
-      path: "/users",
-      roles: ["admin"],
+      path: '/users',
+      roles: ['admin'],
     },
   ];
 
-  const filteredMenuItems = menuItems.filter((item) =>
+  const filteredMenuItems = menuItems.filter(item => 
     hasPermission(item.roles)
   );
 
@@ -110,7 +110,7 @@ const Layout = ({ children }) => {
   );
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: 'flex' }}>
       <AppBar
         position="fixed"
         sx={{
@@ -124,14 +124,14 @@ const Layout = ({ children }) => {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: "none" } }}
+            sx={{ mr: 2, display: { sm: 'none' } }}
           >
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
             Sistema de Gerenciamento de Contratos
           </Typography>
-          <Box sx={{ display: "flex", alignItems: "center" }}>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Typography variant="body2" sx={{ mr: 2 }}>
               {user?.full_name} ({user?.role})
             </Typography>
@@ -151,23 +151,18 @@ const Layout = ({ children }) => {
               id="menu-appbar"
               anchorEl={anchorEl}
               anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
+                vertical: 'top',
+                horizontal: 'right',
               }}
               keepMounted
               transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
+                vertical: 'top',
+                horizontal: 'right',
               }}
               open={Boolean(anchorEl)}
               onClose={handleProfileMenuClose}
             >
-              <MenuItem
-                onClick={() => {
-                  navigate("/profile");
-                  handleProfileMenuClose();
-                }}
-              >
+              <MenuItem onClick={() => { navigate('/profile'); handleProfileMenuClose(); }}>
                 <ListItemIcon>
                   <AccountCircle fontSize="small" />
                 </ListItemIcon>
@@ -196,11 +191,8 @@ const Layout = ({ children }) => {
             keepMounted: true,
           }}
           sx={{
-            display: { xs: "block", sm: "none" },
-            "& .MuiDrawer-paper": {
-              boxSizing: "border-box",
-              width: drawerWidth,
-            },
+            display: { xs: 'block', sm: 'none' },
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
           }}
         >
           {drawer}
@@ -208,11 +200,8 @@ const Layout = ({ children }) => {
         <Drawer
           variant="permanent"
           sx={{
-            display: { xs: "none", sm: "block" },
-            "& .MuiDrawer-paper": {
-              boxSizing: "border-box",
-              width: drawerWidth,
-            },
+            display: { xs: 'none', sm: 'block' },
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
           }}
           open
         >
@@ -235,3 +224,4 @@ const Layout = ({ children }) => {
 };
 
 export default Layout;
+

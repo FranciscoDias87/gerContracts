@@ -125,9 +125,7 @@ const getProfile = async (req, res) => {
     const userId = req.user.id;
 
     const users = await query(
-      `SELECT id, username, email, full_name, role, is_active, created_at, updated_at FROM ${withDB(
-        "users"
-      )} WHERE id = ?`,
+      `SELECT id, username, email, full_name, role, is_active, created_at, updated_at FROM "users" WHERE id = ?`,
       [userId]
     );
 

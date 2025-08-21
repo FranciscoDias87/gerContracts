@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Typography,
@@ -22,38 +22,38 @@ import {
   Grid,
   FormControl,
   InputLabel,
-  Select,
-} from "@mui/material";
+  Select
+} from '@mui/material';
 import {
   Add as AddIcon,
   Edit as EditIcon,
   Delete as DeleteIcon,
-  Visibility as ViewIcon,
-} from "@mui/icons-material";
-import { api } from "../services/api";
+  Visibility as ViewIcon
+} from '@mui/icons-material';
+import { api } from '../services/api';
 
 const ContractsPage = () => {
   const [contracts, setContracts] = useState([]);
   const [clients, setClients] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [openDialog, setOpenDialog] = useState(false);
   const [editingContract, setEditingContract] = useState(null);
   const [formData, setFormData] = useState({
-    client_id: "",
-    contract_number: "",
-    description: "",
-    start_date: "",
-    end_date: "",
-    total_value: "",
-    status: "draft",
+    client_id: '',
+    contract_number: '',
+    description: '',
+    start_date: '',
+    end_date: '',
+    total_value: '',
+    status: 'draft'
   });
 
   const statusOptions = [
-    { value: "draft", label: "Rascunho", color: "default" },
-    { value: "active", label: "Ativo", color: "success" },
-    { value: "completed", label: "Concluído", color: "info" },
-    { value: "cancelled", label: "Cancelado", color: "error" },
+    { value: 'draft', label: 'Rascunho', color: 'default' },
+    { value: 'active', label: 'Ativo', color: 'success' },
+    { value: 'completed', label: 'Concluído', color: 'info' },
+    { value: 'cancelled', label: 'Cancelado', color: 'error' }
   ];
 
   useEffect(() => {
@@ -63,13 +63,13 @@ const ContractsPage = () => {
 
   const fetchContracts = async () => {
     try {
-      const response = await api.get("/contracts");
+      const response = await api.get('/contracts');
       if (response.data.success) {
         setContracts(response.data.data.contracts);
       }
     } catch (error) {
-      setError("Erro ao carregar contratos");
-      console.error("Erro ao carregar contratos:", error);
+      setError('Erro ao carregar contratos');
+      console.error('Erro ao carregar contratos:', error);
     } finally {
       setLoading(false);
     }
@@ -77,12 +77,12 @@ const ContractsPage = () => {
 
   const fetchClients = async () => {
     try {
-      const response = await api.get("/clients");
+      const response = await api.get('/clients');
       if (response.data.success) {
         setClients(response.data.data.clients);
       }
     } catch (error) {
-      console.error("Erro ao carregar clientes:", error);
+      console.error('Erro ao carregar clientes:', error);
     }
   };
 
@@ -93,21 +93,21 @@ const ContractsPage = () => {
         client_id: contract.client_id,
         contract_number: contract.contract_number,
         description: contract.description,
-        start_date: contract.start_date?.split("T")[0] || "",
-        end_date: contract.end_date?.split("T")[0] || "",
+        start_date: contract.start_date?.split('T')[0] || '',
+        end_date: contract.end_date?.split('T')[0] || '',
         total_value: contract.total_value,
-        status: contract.status,
+        status: contract.status
       });
     } else {
       setEditingContract(null);
       setFormData({
-        client_id: "",
-        contract_number: "",
-        description: "",
-        start_date: "",
-        end_date: "",
-        total_value: "",
-        status: "draft",
+        client_id: '',
+        contract_number: '',
+        description: '',
+        start_date: '',
+        end_date: '',
+        total_value: '',
+        status: 'draft'
       });
     }
     setOpenDialog(true);
@@ -116,76 +116,73 @@ const ContractsPage = () => {
   const handleCloseDialog = () => {
     setOpenDialog(false);
     setEditingContract(null);
-    setError("");
+    setError('');
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
+    setFormData(prev => ({
       ...prev,
-      [name]: value,
+      [name]: value
     }));
   };
 
   const handleSubmit = async () => {
     try {
-      setError("");
-
+      setError('');
+      
       if (editingContract) {
-        const response = await api.put(
-          `/contracts/${editingContract.id}`,
-          formData
-        );
+        const response = await api.put(`/contracts/${editingContract.id}`, formData);
         if (response.data.success) {
           fetchContracts();
           handleCloseDialog();
         }
       } else {
-        const response = await api.post("/contracts", formData);
+        const response = await api.post('/contracts', formData);
         if (response.data.success) {
           fetchContracts();
           handleCloseDialog();
         }
       }
     } catch (error) {
-      setError(error.response?.data?.message || "Erro ao salvar contrato");
+      setError(error.response?.data?.message || 'Erro ao salvar contrato');
     }
   };
 
   const handleDelete = async (contractId) => {
-    if (window.confirm("Tem certeza que deseja excluir este contrato?")) {
+    if (window.confirm('Tem certeza que deseja excluir este contrato?')) {
       try {
         const response = await api.delete(`/contracts/${contractId}`);
         if (response.data.success) {
           fetchContracts();
         }
       } catch (error) {
-        setError("Erro ao excluir contrato");
+        setError('Erro ao excluir contrato');
       }
     }
   };
 
   const getStatusChip = (status) => {
-    const statusConfig = statusOptions.find((opt) => opt.value === status);
+    const statusConfig = statusOptions.find(opt => opt.value === status);
     return (
       <Chip
         label={statusConfig?.label || status}
-        color={statusConfig?.color || "default"}
+        color={statusConfig?.color || 'default'}
         size="small"
       />
     );
   };
 
   const formatCurrency = (value) => {
-    return new Intl.NumberFormat("pt-BR", {
-      style: "currency",
-      currency: "BRL",
+    return new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL'
     }).format(value || 0);
   };
 
   const formatDate = (dateString) => {
-    if (!dateString) return "-";
-    return new Date(dateString).toLocaleDateString("pt-BR");
+    if (!dateString) return '-';
+    return new Date(dateString).toLocaleDateString('pt-BR');
   };
 
   if (loading) {
@@ -198,12 +195,7 @@ const ContractsPage = () => {
 
   return (
     <Box p={3}>
-      <Box
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
-        mb={3}
-      >
+      <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
         <Typography variant="h4" component="h1">
           Contratos
         </Typography>
@@ -276,14 +268,9 @@ const ContractsPage = () => {
       </TableContainer>
 
       {/* Dialog para criar/editar contrato */}
-      <Dialog
-        open={openDialog}
-        onClose={handleCloseDialog}
-        maxWidth="md"
-        fullWidth
-      >
+      <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="md" fullWidth>
         <DialogTitle>
-          {editingContract ? "Editar Contrato" : "Novo Contrato"}
+          {editingContract ? 'Editar Contrato' : 'Novo Contrato'}
         </DialogTitle>
         <DialogContent>
           {error && (
@@ -291,7 +278,7 @@ const ContractsPage = () => {
               {error}
             </Alert>
           )}
-
+          
           <Grid container spacing={2} sx={{ mt: 1 }}>
             <Grid item xs={12} sm={6}>
               <FormControl fullWidth>
@@ -310,7 +297,7 @@ const ContractsPage = () => {
                 </Select>
               </FormControl>
             </Grid>
-
+            
             <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
@@ -320,7 +307,7 @@ const ContractsPage = () => {
                 onChange={handleInputChange}
               />
             </Grid>
-
+            
             <Grid item xs={12}>
               <TextField
                 fullWidth
@@ -332,7 +319,7 @@ const ContractsPage = () => {
                 rows={3}
               />
             </Grid>
-
+            
             <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
@@ -344,7 +331,7 @@ const ContractsPage = () => {
                 InputLabelProps={{ shrink: true }}
               />
             </Grid>
-
+            
             <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
@@ -356,7 +343,7 @@ const ContractsPage = () => {
                 InputLabelProps={{ shrink: true }}
               />
             </Grid>
-
+            
             <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
@@ -368,7 +355,7 @@ const ContractsPage = () => {
                 inputProps={{ step: "0.01" }}
               />
             </Grid>
-
+            
             <Grid item xs={12} sm={6}>
               <FormControl fullWidth>
                 <InputLabel>Status</InputLabel>
@@ -391,7 +378,7 @@ const ContractsPage = () => {
         <DialogActions>
           <Button onClick={handleCloseDialog}>Cancelar</Button>
           <Button onClick={handleSubmit} variant="contained">
-            {editingContract ? "Atualizar" : "Criar"}
+            {editingContract ? 'Atualizar' : 'Criar'}
           </Button>
         </DialogActions>
       </Dialog>
@@ -400,3 +387,4 @@ const ContractsPage = () => {
 };
 
 export default ContractsPage;
+
