@@ -143,7 +143,7 @@ const ClientsPage = () => {
           fetchClients();
         }
       } catch (error) {
-        setError('Erro ao excluir cliente');
+        setError('Erro ao excluir cliente', error);
       }
     }
   };

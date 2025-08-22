@@ -53,7 +53,7 @@ function LoginPage() {
         setError(result.message || 'Erro ao fazer login');
       }
     } catch (error) {
-      setError('Erro ao conectar com o servidor');
+      setError('Erro ao conectar com o servidor',error);
     } finally {
       setLoading(false);
     }

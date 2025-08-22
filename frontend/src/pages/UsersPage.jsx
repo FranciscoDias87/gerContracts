@@ -169,7 +169,7 @@ const UsersPage = () => {
           fetchUsers();
         }
       } catch (error) {
-        setError('Erro ao excluir usuário');
+        setError('Erro ao excluir usuário', error);
       }
     }
   };

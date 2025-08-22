@@ -157,7 +157,7 @@ const ContractsPage = () => {
           fetchContracts();
         }
       } catch (error) {
-        setError('Erro ao excluir contrato');
+        setError('Erro ao excluir contrato', error);
       }
     }
   };

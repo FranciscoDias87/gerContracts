@@ -1,23 +1,23 @@
-const API_BASE_URL = 'https://3001-iql9woog9zr9v61ok5xtk-7643c32e.manusvm.computer/api';
+const API_BASE_URL = "https://localhost/api";
 
 class ApiService {
   constructor() {
     this.baseURL = API_BASE_URL;
-    this.token = localStorage.getItem('token');
+    this.token = localStorage.getItem("token");
   }
 
   setToken(token) {
     this.token = token;
     if (token) {
-      localStorage.setItem('token', token);
+      localStorage.setItem("token", token);
     } else {
-      localStorage.removeItem('token');
+      localStorage.removeItem("token");
     }
   }
 
   getHeaders() {
     const headers = {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     };
 
     if (this.token) {
@@ -39,20 +39,20 @@ class ApiService {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || 'Erro na requisição');
+        throw new Error(data.message || "Erro na requisição");
       }
 
       return data;
     } catch (error) {
-      console.error('API Error:', error);
+      console.error("API Error:", error);
       throw error;
     }
   }
 
   // Métodos de autenticação
   async login(credentials) {
-    const response = await this.request('/auth/login', {
-      method: 'POST',
+    const response = await this.request("/auth/login", {
+      method: "POST",
       body: JSON.stringify(credentials),
     });
 
@@ -64,19 +64,19 @@ class ApiService {
   }
 
   async getProfile() {
-    return this.request('/auth/profile');
+    return this.request("/auth/profile");
   }
 
   async updateProfile(profileData) {
-    return this.request('/auth/profile', {
-      method: 'PUT',
+    return this.request("/auth/profile", {
+      method: "PUT",
       body: JSON.stringify(profileData),
     });
   }
 
   async changePassword(passwordData) {
-    return this.request('/auth/change-password', {
-      method: 'PUT',
+    return this.request("/auth/change-password", {
+      method: "PUT",
       body: JSON.stringify(passwordData),
     });
   }
@@ -84,7 +84,7 @@ class ApiService {
   // Métodos de usuários
   async getUsers(params = {}) {
     const queryString = new URLSearchParams(params).toString();
-    return this.request(`/users${queryString ? `?${queryString}` : ''}`);
+    return this.request(`/users${queryString ? `?${queryString}` : ""}`);
   }
 
   async getUserById(id) {
@@ -92,33 +92,33 @@ class ApiService {
   }
 
   async createUser(userData) {
-    return this.request('/users', {
-      method: 'POST',
+    return this.request("/users", {
+      method: "POST",
       body: JSON.stringify(userData),
     });
   }
 
   async updateUser(id, userData) {
     return this.request(`/users/${id}`, {
-      method: 'PUT',
+      method: "PUT",
       body: JSON.stringify(userData),
     });
   }
 
   async deleteUser(id) {
     return this.request(`/users/${id}`, {
-      method: 'DELETE',
+      method: "DELETE",
     });
   }
 
   async getLocutors() {
-    return this.request('/users/locutors');
+    return this.request("/users/locutors");
   }
 
   // Métodos de clientes
   async getClients(params = {}) {
     const queryString = new URLSearchParams(params).toString();
-    return this.request(`/clients${queryString ? `?${queryString}` : ''}`);
+    return this.request(`/clients${queryString ? `?${queryString}` : ""}`);
   }
 
   async getClientById(id) {
@@ -126,22 +126,22 @@ class ApiService {
   }
 
   async createClient(clientData) {
-    return this.request('/clients', {
-      method: 'POST',
+    return this.request("/clients", {
+      method: "POST",
       body: JSON.stringify(clientData),
     });
   }
 
   async updateClient(id, clientData) {
     return this.request(`/clients/${id}`, {
-      method: 'PUT',
+      method: "PUT",
       body: JSON.stringify(clientData),
     });
   }
 
   async deleteClient(id) {
     return this.request(`/clients/${id}`, {
-      method: 'DELETE',
+      method: "DELETE",
     });
   }
 
@@ -152,7 +152,7 @@ class ApiService {
   // Métodos de contratos
   async getContracts(params = {}) {
     const queryString = new URLSearchParams(params).toString();
-    return this.request(`/contracts${queryString ? `?${queryString}` : ''}`);
+    return this.request(`/contracts${queryString ? `?${queryString}` : ""}`);
   }
 
   async getContractById(id) {
@@ -160,33 +160,33 @@ class ApiService {
   }
 
   async createContract(contractData) {
-    return this.request('/contracts', {
-      method: 'POST',
+    return this.request("/contracts", {
+      method: "POST",
       body: JSON.stringify(contractData),
     });
   }
 
   async updateContract(id, contractData) {
     return this.request(`/contracts/${id}`, {
-      method: 'PUT',
+      method: "PUT",
       body: JSON.stringify(contractData),
     });
   }
 
   async deleteContract(id) {
     return this.request(`/contracts/${id}`, {
-      method: 'DELETE',
+      method: "DELETE",
     });
   }
 
   async approveContract(id) {
     return this.request(`/contracts/${id}/approve`, {
-      method: 'PUT',
+      method: "PUT",
     });
   }
 
   async getContractStats() {
-    return this.request('/contracts/stats');
+    return this.request("/contracts/stats");
   }
 
   // Método para logout
@@ -199,4 +199,3 @@ const apiService = new ApiService();
 
 export { apiService as api };
 export default apiService;
-

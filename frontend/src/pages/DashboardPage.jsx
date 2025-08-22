@@ -57,7 +57,7 @@ function DashboardPage() {
         setError('Erro ao carregar estatísticas');
       }
     } catch (error) {
-      setError('Erro ao conectar com o servidor');
+      setError('Erro ao conectar com o servidor',error);
     } finally {
       setLoading(false);
     }
