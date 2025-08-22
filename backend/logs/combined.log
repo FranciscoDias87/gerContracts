@@ -1,0 +1,15 @@
+{"level":"warn","message":"Rota não encontrada: HEAD /","timestamp":"2025-08-20 16:04:27"}
+{"level":"info","message":"10.131.70.1 - - [20/Aug/2025:20:04:27 +0000] \"HEAD / HTTP/1.1\" 404 50 \"-\" \"node\"","timestamp":"2025-08-20 16:04:27"}
+{"level":"warn","message":"Rota não encontrada: GET /","timestamp":"2025-08-20 16:04:27"}
+{"level":"info","message":"10.131.70.1 - - [20/Aug/2025:20:04:27 +0000] \"GET / HTTP/1.1\" 404 50 \"-\" \"node\"","timestamp":"2025-08-20 16:04:27"}
+{"level":"warn","message":"Rota não encontrada: HEAD /","timestamp":"2025-08-20 16:06:23"}
+{"level":"info","message":"10.131.70.1 - - [20/Aug/2025:20:06:23 +0000] \"HEAD / HTTP/1.1\" 404 50 \"-\" \"node\"","timestamp":"2025-08-20 16:06:23"}
+{"level":"warn","message":"Rota não encontrada: GET /","timestamp":"2025-08-20 16:06:23"}
+{"level":"info","message":"10.131.70.1 - - [20/Aug/2025:20:06:23 +0000] \"GET / HTTP/1.1\" 404 50 \"-\" \"node\"","timestamp":"2025-08-20 16:06:23"}
+{"level":"warn","message":"Rota não encontrada: GET /","timestamp":"2025-08-20 16:06:39"}
+{"level":"info","message":"10.131.70.1 - - [20/Aug/2025:20:06:39 +0000] \"GET / HTTP/1.1\" 404 50 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:141.0) Gecko/20100101 Firefox/141.0\"","timestamp":"2025-08-20 16:06:39"}
+{"level":"warn","message":"Rota não encontrada: GET /favicon.ico","timestamp":"2025-08-20 16:06:39"}
+{"level":"info","message":"10.131.70.1 - - [20/Aug/2025:20:06:39 +0000] \"GET /favicon.ico HTTP/1.1\" 404 50 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:141.0) Gecko/20100101 Firefox/141.0\"","timestamp":"2025-08-20 16:06:39"}
+{"level":"info","message":"10.131.70.1 - - [20/Aug/2025:20:06:51 +0000] \"POST /api/auth/login HTTP/1.1\" 200 375 \"https://frvbakqq.manus.space/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:141.0) Gecko/20100101 Firefox/141.0\"","timestamp":"2025-08-20 16:06:51"}
+{"level":"info","message":"10.131.70.1 - - [20/Aug/2025:20:06:52 +0000] \"GET /api/contracts/stats HTTP/1.1\" 200 255 \"https://frvbakqq.manus.space/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:141.0) Gecko/20100101 Firefox/141.0\"","timestamp":"2025-08-20 16:06:52"}
+{"level":"info","message":"10.131.70.1 - - [20/Aug/2025:20:06:56 +0000] \"GET /api/contracts/stats HTTP/1.1\" 304 - \"https://frvbakqq.manus.space/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:141.0) Gecko/20100101 Firefox/141.0\"","timestamp":"2025-08-20 16:06:56"}

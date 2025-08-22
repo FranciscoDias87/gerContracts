@@ -1,49 +1,49 @@
-import { createTheme } from '@mui/material/styles';
+import { createTheme } from "@mui/material/styles";
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#2196f3', // Azul
+      main: "#2196f3", // Azul
     },
     secondary: {
-      main: '#ff4081', // Rosa
+      main: "#ff4081", // Rosa
     },
     error: {
-      main: '#f44336', // Vermelho
+      main: "#f44336", // Vermelho
     },
     warning: {
-      main: '#ff9800', // Laranja
+      main: "#ff9800", // Laranja
     },
     info: {
-      main: '#2196f3', // Azul claro
+      main: "#2196f3", // Azul claro
     },
     success: {
-      main: '#4caf50', // Verde
+      main: "#4caf50", // Verde
     },
     background: {
-      default: '#f5f5f5',
-      paper: '#ffffff',
+      default: "#f5f5f5",
+      paper: "#ffffff",
     },
   },
   typography: {
-    fontFamily: 'Roboto, sans-serif',
+    fontFamily: "Roboto, sans-serif",
     h1: {
-      fontSize: '2.5rem',
+      fontSize: "2.5rem",
       fontWeight: 500,
     },
     h2: {
-      fontSize: '2rem',
+      fontSize: "2rem",
       fontWeight: 500,
     },
     h3: {
-      fontSize: '1.75rem',
+      fontSize: "1.75rem",
       fontWeight: 500,
     },
     body1: {
-      fontSize: '1rem',
+      fontSize: "1rem",
     },
     button: {
-      textTransform: 'none',
+      textTransform: "none",
     },
   },
   components: {
@@ -58,7 +58,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: 12,
-          boxShadow: '0 4px 20px rgba(0,0,0,0.05)',
+          boxShadow: "0 4px 20px rgba(0,0,0,0.05)",
         },
       },
     },
@@ -66,4 +66,3 @@ const theme = createTheme({
 });
 
 export default theme;
-
