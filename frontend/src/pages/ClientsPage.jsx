@@ -54,7 +54,7 @@ const ClientsPage = () => {
 
   const fetchClients = async () => {
     try {
-      const response = await api.get('/clients');
+      const response = await api.getClients({limit: 20, offset: 0});
       if (response.data.success) {
         setClients(response.data.data.clients);
       }
@@ -116,15 +116,15 @@ const ClientsPage = () => {
   const handleSubmit = async () => {
     try {
       setError('');
-      
+      let response;
       if (editingClient) {
-        const response = await api.put(`/clients/${editingClient.id}`, formData);
+        response = await api.updateClient(editingClient.id, formData);
         if (response.data.success) {
           fetchClients();
           handleCloseDialog();
         }
       } else {
-        const response = await api.post('/clients', formData);
+        response = await api.createClient(formData);
         if (response.data.success) {
           fetchClients();
           handleCloseDialog();
@@ -138,7 +138,7 @@ const ClientsPage = () => {
   const handleDelete = async (clientId) => {
     if (window.confirm('Tem certeza que deseja excluir este cliente?')) {
       try {
-        const response = await api.delete(`/clients/${clientId}`);
+        const response = await api.deleteClient(clientId);
         if (response.data.success) {
           fetchClients();
         }

@@ -10,7 +10,7 @@ import {
   CircularProgress,
 } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
+import useAuth from '../contexts/useAuth';
 
 function LoginPage() {
   const [formData, setFormData] = useState({

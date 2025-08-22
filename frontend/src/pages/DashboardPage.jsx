@@ -14,7 +14,7 @@ import {
   Business,
   Description,
 } from '@mui/icons-material';
-import { useAuth } from '../contexts/AuthContext';
+import  useAuth  from '../contexts/useAuth';
 import apiService from '../services/api';
 
 const StatCard = ({ title, value, icon, color = 'primary' }) => (

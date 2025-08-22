@@ -35,7 +35,7 @@ import {
   RecordVoiceOver as LocutorIcon
 } from '@mui/icons-material';
 import { api } from '../services/api';
-import { useAuth } from '../contexts/AuthContext';
+import useAuth from '../contexts/useAuth';
 
 const UsersPage = () => {
   const { user } = useAuth();
@@ -65,7 +65,7 @@ const UsersPage = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await api.get('/users');
+      const response = await api.getUsers({limit: 20, offset: 0});
       if (response.data.success) {
         setUsers(response.data.data.users);
       }
@@ -119,37 +119,27 @@ const UsersPage = () => {
   const handleSubmit = async () => {
     try {
       setError('');
-      
-      // Validações básicas
       if (!formData.username || !formData.email || !formData.full_name) {
         setError('Preencha todos os campos obrigatórios');
         return;
       }
-
       if (!editingUser && !formData.password) {
         setError('Senha é obrigatória para novos usuários');
         return;
       }
-
       const submitData = { ...formData };
-      
-      // Se estiver editando e senha estiver vazia, remover do payload
       if (editingUser && !formData.password) {
         delete submitData.password;
       }
-      
+      let response;
       if (editingUser) {
-        const response = await api.put(`/users/${editingUser.id}`, submitData);
-        if (response.data.success) {
-          fetchUsers();
-          handleCloseDialog();
-        }
+        response = await api.updateUser(editingUser.id, submitData);
       } else {
-        const response = await api.post('/users', submitData);
-        if (response.data.success) {
-          fetchUsers();
-          handleCloseDialog();
-        }
+        response = await api.createUser(submitData);
+      }
+      if (response.data.success) {
+        fetchUsers();
+        handleCloseDialog();
       }
     } catch (error) {
       setError(error.response?.data?.message || 'Erro ao salvar usuário');
@@ -161,10 +151,9 @@ const UsersPage = () => {
       setError('Você não pode excluir seu próprio usuário');
       return;
     }
-
     if (window.confirm('Tem certeza que deseja excluir este usuário?')) {
       try {
-        const response = await api.delete(`/users/${userId}`);
+        const response = await api.deleteUser(userId);
         if (response.data.success) {
           fetchUsers();
         }

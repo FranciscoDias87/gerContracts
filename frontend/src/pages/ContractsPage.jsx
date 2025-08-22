@@ -63,7 +63,7 @@ const ContractsPage = () => {
 
   const fetchContracts = async () => {
     try {
-      const response = await api.get('/contracts');
+      const response = await api.getContracts({limit: 20, offset: 0});
       if (response.data.success) {
         setContracts(response.data.data.contracts);
       }
@@ -77,7 +77,7 @@ const ContractsPage = () => {
 
   const fetchClients = async () => {
     try {
-      const response = await api.get('/clients');
+      const response = await api.getClients({limit: 20, offset: 0});
       if (response.data.success) {
         setClients(response.data.data.clients);
       }
@@ -130,19 +130,15 @@ const ContractsPage = () => {
   const handleSubmit = async () => {
     try {
       setError('');
-      
+      let response;
       if (editingContract) {
-        const response = await api.put(`/contracts/${editingContract.id}`, formData);
-        if (response.data.success) {
-          fetchContracts();
-          handleCloseDialog();
-        }
+        response = await api.updateContract(editingContract.id, formData);
       } else {
-        const response = await api.post('/contracts', formData);
-        if (response.data.success) {
-          fetchContracts();
-          handleCloseDialog();
-        }
+        response = await api.createContract(formData);
+      }
+      if (response.data.success) {
+        fetchContracts();
+        handleCloseDialog();
       }
     } catch (error) {
       setError(error.response?.data?.message || 'Erro ao salvar contrato');
