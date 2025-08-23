@@ -6,12 +6,8 @@ const getAllUsers = async (req, res) => {
     let limit = parseInt(req.query.limit, 10);
     let offset = parseInt(req.query.offset, 10);
 
-    if (isNaN(limit) || limit <= 0) {
-      limit = 10;
-    }
-    if (isNaN(offset) || offset < 0) {
-      offset = 0;
-    }
+    if (isNaN(limit) || limit <= 0) limit = 10;
+    if (isNaN(offset) || offset < 0) offset = 0;
 
     const search = req.query.search || "";
     const role = req.query.role || "";
@@ -30,14 +26,16 @@ const getAllUsers = async (req, res) => {
       params.push(role);
     }
 
-    // Buscar usuários com paginação
-    const users = await query(
-      `SELECT id, username, email, full_name, role, is_active, created_at, updated_at 
-             FROM users ${whereClause} 
-             ORDER BY created_at DESC 
-             LIMIT ? OFFSET ?`,
-      [...params, limit, offset]
-    );
+    // ATENÇÃO: Nunca use valores vindos do usuário sem validação!
+    const sql = `
+      SELECT id, username, email, full_name, role, is_active, created_at, updated_at
+      FROM users ${whereClause}
+      ORDER BY created_at DESC
+      LIMIT ${limit} OFFSET ${offset}
+    `;
+
+    const users = await query(sql, params);
+    console.log("Users do Backend: ", users); // Adicione este log para ver o resultado
 
     // Contar total de usuários
     const totalResult = await query(

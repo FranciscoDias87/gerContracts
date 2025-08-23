@@ -64,8 +64,10 @@ const ContractsPage = () => {
   const fetchContracts = async () => {
     try {
       const response = await api.getContracts({limit: 20, offset: 0});
-      if (response.data.success) {
-        setContracts(response.data.data.contracts);
+      console.log("RESPOSTA: ",response);
+      if (response.success) {
+        setContracts(response.data.contracts);
+        console.log("CONTRATOS: ",response.data.contracts);
       }
     } catch (error) {
       setError('Erro ao carregar contratos');

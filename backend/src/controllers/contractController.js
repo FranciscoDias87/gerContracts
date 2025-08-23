@@ -23,9 +23,13 @@ const generateContractNumber = async () => {
 
 const getAllContracts = async (req, res) => {
   try {
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 10;
-    const offset = parseInt(req.query.offset) || 0;
+    const page = parseInt(req.query.page, 10) || 1;
+    let limit = parseInt(req.query.limit, 10);
+    let offset = parseInt(req.query.offset, 10);
+
+    if (isNaN(limit) || limit <= 0) limit = 10;
+    if (isNaN(offset) || offset < 0) offset = 0;
+
     const search = req.query.search || "";
     const status = req.query.status || "";
     const payment_status = req.query.payment_status || "";
@@ -49,37 +53,37 @@ const getAllContracts = async (req, res) => {
       params.push(payment_status);
     }
 
-    // Filtrar por role do usuário
     if (req.user.role === "locutor") {
       whereClause += " AND rp.locutor_id = ?";
       params.push(req.user.id);
     }
 
-    // Buscar contratos com informações relacionadas
-    const contracts = await query(
-      `SELECT c.*, cl.company_name, cl.contact_name, 
-                    rp.program_name, at.type_name, at.duration_seconds,
-                    u.full_name as created_by_name
-             FROM contracts c
-             JOIN clients cl ON c.client_id = cl.id
-             JOIN radio_programs rp ON c.program_id = rp.id
-             JOIN ad_types at ON c.ad_type_id = at.id
-             JOIN users u ON c.created_by = u.id
-             ${whereClause}
-             ORDER BY c.created_at DESC
-             LIMIT ? OFFSET ?`,
-      [...params, limit, offset]
-    );
+    // ATENÇÃO: Nunca use valores vindos do usuário sem validação!
+    const sql = `
+      SELECT c.*, cl.company_name, cl.contact_name, 
+             rp.program_name, at.type_name, at.duration_seconds,
+             u.full_name as created_by_name
+      FROM contracts c
+      JOIN clients cl ON c.client_id = cl.id
+      JOIN radio_programs rp ON c.program_id = rp.id
+      JOIN ad_types at ON c.ad_type_id = at.id
+      JOIN users u ON c.created_by = u.id
+      ${whereClause}
+      ORDER BY c.created_at DESC
+      LIMIT ${limit} OFFSET ${offset}
+    `;
+
+    const contracts = await query(sql, params);
 
     // Contar total de contratos
     const totalResult = await query(
       `SELECT COUNT(*) as total 
-             FROM contracts c
-             JOIN clients cl ON c.client_id = cl.id
-             JOIN radio_programs rp ON c.program_id = rp.id
-             JOIN ad_types at ON c.ad_type_id = at.id
-             JOIN users u ON c.created_by = u.id
-             ${whereClause}`,
+       FROM contracts c
+       JOIN clients cl ON c.client_id = cl.id
+       JOIN radio_programs rp ON c.program_id = rp.id
+       JOIN ad_types at ON c.ad_type_id = at.id
+       JOIN users u ON c.created_by = u.id
+       ${whereClause}`,
       params
     );
     const total = totalResult[0].total;

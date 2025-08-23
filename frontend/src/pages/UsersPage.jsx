@@ -66,9 +66,12 @@ const UsersPage = () => {
   const fetchUsers = async () => {
     try {
       const response = await api.getUsers({limit: 20, offset: 0});
-      if (response.data.success) {
-        setUsers(response.data.data.users);
+      console.log('Response from API:', response); // Log para verificar a resposta
+      if (response.success) {
+        setUsers(response.data.users);
+        console.log("USERS: ",response.data.users); // Mostra os dados recebidos
       }
+      
     } catch (error) {
       setError('Erro ao carregar usuários');
       console.error('Erro ao carregar usuários:', error);
@@ -137,6 +140,7 @@ const UsersPage = () => {
       } else {
         response = await api.createUser(submitData);
       }
+      
       if (response.data.success) {
         fetchUsers();
         handleCloseDialog();
@@ -183,7 +187,7 @@ const UsersPage = () => {
   };
 
   // Verificar se o usuário atual tem permissão para gerenciar usuários
-  const canManageUsers = user?.role === 'admin';
+  const canManageUsers = user?.role === 'admin' || user?.role === 'gerente';
 
   if (!canManageUsers) {
     return (
@@ -202,6 +206,8 @@ const UsersPage = () => {
       </Box>
     );
   }
+
+  console.log('Users no estado: ', users); // Log para verificar o estado dos usuários
 
   return (
     <Box p={3}>

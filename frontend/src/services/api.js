@@ -29,10 +29,17 @@ class ApiService {
 
   async request(endpoint, options = {}) {
     const url = `${this.baseURL}${endpoint}`;
+    // Garante que o método seja GET por padrão
     const config = {
+      method: options.method || "GET",
       headers: this.getHeaders(),
       ...options,
     };
+
+    // Se for GET, remova o body do config
+    if (config.method === "GET") {
+      delete config.body;
+    }
 
     try {
       const response = await fetch(url, config);

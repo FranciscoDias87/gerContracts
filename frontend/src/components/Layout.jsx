@@ -5,7 +5,6 @@ import {
   Typography,
   Drawer,
   List,
-  ListItem,
   ListItemIcon,
   ListItemText,
   IconButton,
@@ -14,6 +13,7 @@ import {
   Menu,
   MenuItem,
   Divider,
+  ListItemButton,
 } from '@mui/material';
 import {
   Menu as MenuIcon,
@@ -95,15 +95,14 @@ const Layout = ({ children }) => {
       <Divider />
       <List>
         {filteredMenuItems.map((item) => (
-          <ListItem
-            button
+          <ListItemButton
             key={item.text}
             onClick={() => navigate(item.path)}
             selected={location.pathname === item.path}
           >
             <ListItemIcon>{item.icon}</ListItemIcon>
             <ListItemText primary={item.text} />
-          </ListItem>
+          </ListItemButton>
         ))}
       </List>
     </div>

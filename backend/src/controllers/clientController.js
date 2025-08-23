@@ -3,9 +3,12 @@ const { query } = require("../config/database");
 
 const getAllClients = async (req, res) => {
   try {
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 10;
-    const offset = parseInt(req.query.offset) || 0;
+    const page = parseInt(req.query.page, 10) || 1;
+    let limit = parseInt(req.query.limit, 10);
+    let offset = parseInt(req.query.offset, 10);
+
+    if (isNaN(limit) || limit <= 0) limit = 10;
+    if (isNaN(offset) || offset < 0) offset = 0;
     const search = req.query.search || "";
 
     let whereClause = "WHERE is_active = TRUE";
@@ -19,11 +22,11 @@ const getAllClients = async (req, res) => {
 
     // Buscar clientes com paginação
     const clients = await query(
-      `SELECT id, company_name, contact_name, email, phone, address, cnpj, created_at, updated_at 
-             FROM clients ${whereClause} 
-             ORDER BY company_name ASC 
-             LIMIT ? OFFSET ?`,
-      [...params, limit, offset]
+      `SELECT id, company_name, contact_name, email, phone, address, cnpj, city, state, zip_code, notes, created_at, updated_at 
+       FROM clients ${whereClause} 
+       ORDER BY company_name ASC 
+       LIMIT ${limit} OFFSET ${offset}`,
+      params
     );
 
     // Contar total de clientes
@@ -102,8 +105,26 @@ const getClientById = async (req, res) => {
 
 const createClient = async (req, res) => {
   try {
-    const { company_name, contact_name, email, phone, address, cnpj } =
-      req.body;
+    const {
+      company_name,
+      contact_name,
+      email,
+      phone,
+      address,
+      city,
+      state,
+      zip_code,
+      cnpj,
+      notes,
+    } = req.body;
+
+    // Validação básica
+    if (!company_name || !email || !phone || !address) {
+      return res.status(400).json({
+        success: false,
+        message: "Dados inválidos: Preencha todos os campos obrigatórios.",
+      });
+    }
 
     // Verificar se cliente já existe (por email ou CNPJ)
     let existingClients = [];
@@ -127,8 +148,19 @@ const createClient = async (req, res) => {
 
     // Inserir cliente
     const result = await query(
-      "INSERT INTO clients (company_name, contact_name, email, phone, address, cnpj) VALUES (?, ?, ?, ?, ?, ?)",
-      [company_name, contact_name, email, phone, address, cnpj]
+      "INSERT INTO clients (company_name, contact_name, email, phone, address, city, state, zip_code, cnpj, notes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      [
+        company_name,
+        contact_name,
+        email,
+        phone,
+        address,
+        city,
+        state,
+        zip_code,
+        cnpj,
+        notes,
+      ]
     );
 
     // Buscar cliente criado

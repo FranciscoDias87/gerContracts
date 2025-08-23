@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Typography,
@@ -18,34 +18,34 @@ import {
   IconButton,
   Alert,
   Grid,
-  Chip
-} from '@mui/material';
+  Chip,
+} from "@mui/material";
 import {
   Add as AddIcon,
   Edit as EditIcon,
   Delete as DeleteIcon,
   Business as BusinessIcon,
-  Person as PersonIcon
-} from '@mui/icons-material';
-import { api } from '../services/api';
+  Person as PersonIcon,
+} from "@mui/icons-material";
+import { api } from "../services/api";
 
 const ClientsPage = () => {
   const [clients, setClients] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [openDialog, setOpenDialog] = useState(false);
   const [editingClient, setEditingClient] = useState(null);
   const [formData, setFormData] = useState({
-    company_name: '',
-    contact_name: '',
-    email: '',
-    phone: '',
-    address: '',
-    city: '',
-    state: '',
-    zip_code: '',
-    cnpj: '',
-    notes: ''
+    company_name: "",
+    contact_name: "",
+    email: "",
+    phone: "",
+    address: "",
+    city: "",
+    state: "",
+    zip_code: "",
+    cnpj: "",
+    notes: "",
   });
 
   useEffect(() => {
@@ -54,13 +54,15 @@ const ClientsPage = () => {
 
   const fetchClients = async () => {
     try {
-      const response = await api.getClients({limit: 20, offset: 0});
-      if (response.data.success) {
-        setClients(response.data.data.clients);
+      const response = await api.getClients({ limit: 20, offset: 0 });
+      console.log("RESPOSTA: ", response);
+      if (response.success) {
+        setClients(response.data.clients);
+        console.log("CLIENTES: ", response.data.clients);
       }
     } catch (error) {
-      setError('Erro ao carregar clientes');
-      console.error('Erro ao carregar clientes:', error);
+      setError("Erro ao carregar clientes");
+      console.error("Erro ao carregar clientes:", error);
     } finally {
       setLoading(false);
     }
@@ -70,30 +72,30 @@ const ClientsPage = () => {
     if (client) {
       setEditingClient(client);
       setFormData({
-        company_name: client.company_name || '',
-        contact_name: client.contact_name || '',
-        email: client.email || '',
-        phone: client.phone || '',
-        address: client.address || '',
-        city: client.city || '',
-        state: client.state || '',
-        zip_code: client.zip_code || '',
-        cnpj: client.cnpj || '',
-        notes: client.notes || ''
+        company_name: client.company_name || "",
+        contact_name: client.contact_name || "",
+        email: client.email || "",
+        phone: client.phone || "",
+        address: client.address || "",
+        city: client.city || "",
+        state: client.state || "",
+        zip_code: client.zip_code || "",
+        cnpj: client.cnpj || "",
+        notes: client.notes || "",
       });
     } else {
       setEditingClient(null);
       setFormData({
-        company_name: '',
-        contact_name: '',
-        email: '',
-        phone: '',
-        address: '',
-        city: '',
-        state: '',
-        zip_code: '',
-        cnpj: '',
-        notes: ''
+        company_name: "",
+        contact_name: "",
+        email: "",
+        phone: "",
+        address: "",
+        city: "",
+        state: "",
+        zip_code: "",
+        cnpj: "",
+        notes: "",
       });
     }
     setOpenDialog(true);
@@ -102,67 +104,89 @@ const ClientsPage = () => {
   const handleCloseDialog = () => {
     setOpenDialog(false);
     setEditingClient(null);
-    setError('');
+    setError("");
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = async () => {
+    console.log("Form data before submit:", formData);
     try {
-      setError('');
+      setError("");
+
+      const submitData = {
+        company_name: formData.company_name.trim(),
+        contact_name: formData.contact_name,
+        email: formData.email.trim(),
+        phone: formData.phone.trim(),
+        address: formData.address.trim(),
+        city: formData.city.city.trim(),
+        state: formData.state.state.trim(),
+        zip_code: formData.zip_code.zip_code.trim(),
+        cnpj: formData.cnpj.cnpj.trim(),
+        notes: formData.notes.notes.trim(),
+      };
       let response;
       if (editingClient) {
-        response = await api.updateClient(editingClient.id, formData);
-        if (response.data.success) {
+        response = await api.updateClient(editingClient.id, submitData);
+        if (response.success) {
           fetchClients();
           handleCloseDialog();
         }
       } else {
-        response = await api.createClient(formData);
-        if (response.data.success) {
+        response = await api.createClient(submitData);
+
+        if (response.success) {
           fetchClients();
           handleCloseDialog();
         }
       }
     } catch (error) {
-      setError(error.response?.data?.message || 'Erro ao salvar cliente');
+      setError(
+        error.response?.data?.message || "Erro de Submit ao salvar cliente"
+      );
     }
   };
 
   const handleDelete = async (clientId) => {
-    if (window.confirm('Tem certeza que deseja excluir este cliente?')) {
+    if (window.confirm("Tem certeza que deseja excluir este cliente?")) {
       try {
         const response = await api.deleteClient(clientId);
         if (response.data.success) {
           fetchClients();
         }
       } catch (error) {
-        setError('Erro ao excluir cliente', error);
+        setError("Erro ao excluir cliente", error);
       }
     }
   };
 
   const formatPhone = (phone) => {
-    if (!phone) return '-';
+    if (!phone) return "-";
     // Formato básico para telefone brasileiro
-    const cleaned = phone.replace(/\D/g, '');
+    const cleaned = phone.replace(/\D/g, "");
     if (cleaned.length === 11) {
-      return `(${cleaned.slice(0, 2)}) ${cleaned.slice(2, 7)}-${cleaned.slice(7)}`;
+      return `(${cleaned.slice(0, 2)}) ${cleaned.slice(2, 7)}-${cleaned.slice(
+        7
+      )}`;
     }
     return phone;
   };
 
   const formatCNPJ = (cnpj) => {
-    if (!cnpj) return '-';
-    const cleaned = cnpj.replace(/\D/g, '');
+    if (!cnpj) return "-";
+    const cleaned = cnpj.replace(/\D/g, "");
     if (cleaned.length === 14) {
-      return `${cleaned.slice(0, 2)}.${cleaned.slice(2, 5)}.${cleaned.slice(5, 8)}/${cleaned.slice(8, 12)}-${cleaned.slice(12)}`;
+      return `${cleaned.slice(0, 2)}.${cleaned.slice(2, 5)}.${cleaned.slice(
+        5,
+        8
+      )}/${cleaned.slice(8, 12)}-${cleaned.slice(12)}`;
     }
     return cnpj;
   };
@@ -177,7 +201,12 @@ const ClientsPage = () => {
 
   return (
     <Box p={3}>
-      <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        mb={3}
+      >
         <Typography variant="h4" component="h1">
           Clientes
         </Typography>
@@ -214,19 +243,19 @@ const ClientsPage = () => {
               <TableRow key={client.id}>
                 <TableCell>
                   <Box display="flex" alignItems="center">
-                    <BusinessIcon sx={{ mr: 1, color: 'primary.main' }} />
+                    <BusinessIcon sx={{ mr: 1, color: "primary.main" }} />
                     {client.company_name}
                   </Box>
                 </TableCell>
                 <TableCell>
                   <Box display="flex" alignItems="center">
-                    <PersonIcon sx={{ mr: 1, color: 'text.secondary' }} />
-                    {client.contact_name || '-'}
+                    <PersonIcon sx={{ mr: 1, color: "text.secondary" }} />
+                    {client.contact_name || "-"}
                   </Box>
                 </TableCell>
-                <TableCell>{client.email || '-'}</TableCell>
+                <TableCell>{client.email || "-"}</TableCell>
                 <TableCell>{formatPhone(client.phone)}</TableCell>
-                <TableCell>{client.city || '-'}</TableCell>
+                <TableCell>{client.city || "-"}</TableCell>
                 <TableCell>{formatCNPJ(client.cnpj)}</TableCell>
                 <TableCell>
                   <IconButton
@@ -258,9 +287,14 @@ const ClientsPage = () => {
       </TableContainer>
 
       {/* Dialog para criar/editar cliente */}
-      <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="md" fullWidth>
+      <Dialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        maxWidth="md"
+        fullWidth
+      >
         <DialogTitle>
-          {editingClient ? 'Editar Cliente' : 'Novo Cliente'}
+          {editingClient ? "Editar Cliente" : "Novo Cliente"}
         </DialogTitle>
         <DialogContent>
           {error && (
@@ -268,7 +302,7 @@ const ClientsPage = () => {
               {error}
             </Alert>
           )}
-          
+
           <Grid container spacing={2} sx={{ mt: 1 }}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -280,7 +314,7 @@ const ClientsPage = () => {
                 required
               />
             </Grid>
-            
+
             <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
@@ -290,7 +324,7 @@ const ClientsPage = () => {
                 onChange={handleInputChange}
               />
             </Grid>
-            
+
             <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
@@ -301,7 +335,7 @@ const ClientsPage = () => {
                 onChange={handleInputChange}
               />
             </Grid>
-            
+
             <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
@@ -311,7 +345,7 @@ const ClientsPage = () => {
                 onChange={handleInputChange}
               />
             </Grid>
-            
+
             <Grid item xs={12}>
               <TextField
                 fullWidth
@@ -321,7 +355,7 @@ const ClientsPage = () => {
                 onChange={handleInputChange}
               />
             </Grid>
-            
+
             <Grid item xs={12} sm={4}>
               <TextField
                 fullWidth
@@ -331,7 +365,7 @@ const ClientsPage = () => {
                 onChange={handleInputChange}
               />
             </Grid>
-            
+
             <Grid item xs={12} sm={4}>
               <TextField
                 fullWidth
@@ -341,7 +375,7 @@ const ClientsPage = () => {
                 onChange={handleInputChange}
               />
             </Grid>
-            
+
             <Grid item xs={12} sm={4}>
               <TextField
                 fullWidth
@@ -351,7 +385,7 @@ const ClientsPage = () => {
                 onChange={handleInputChange}
               />
             </Grid>
-            
+
             <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
@@ -361,7 +395,7 @@ const ClientsPage = () => {
                 onChange={handleInputChange}
               />
             </Grid>
-            
+
             <Grid item xs={12}>
               <TextField
                 fullWidth
@@ -378,7 +412,7 @@ const ClientsPage = () => {
         <DialogActions>
           <Button onClick={handleCloseDialog}>Cancelar</Button>
           <Button onClick={handleSubmit} variant="contained">
-            {editingClient ? 'Atualizar' : 'Criar'}
+            {editingClient ? "Atualizar" : "Criar"}
           </Button>
         </DialogActions>
       </Dialog>
@@ -387,4 +421,3 @@ const ClientsPage = () => {
 };
 
 export default ClientsPage;
-
